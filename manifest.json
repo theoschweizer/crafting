@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "crafting",
+  "version": "1.0",
+  "description": "we be getting crafty....generates billions of dollars for owners",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": [
+    "*://*.google.com/*",
+    "*://*.bing.com/*",
+    "*://*.duckduckgo.com/*"
+  ],
+  "action": {
+    "default_popup": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.google.com/*", "*://*.bing.com/*", "*://*.duckduckgo.com/*"],
+      "ts": ["contentScript.ts"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.ts"
+  }
+}
