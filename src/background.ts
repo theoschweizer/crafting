@@ -18,10 +18,26 @@ const searchInput = document.querySelector(selector);
 if (!searchInput) return;
 
 searchInput.addEventListener('change', (event) => {
+    const target = event.target as HTMLInputElement;
     chrome.runtime.sendMessage({
     type: 'SEARCH_INPUT',
-    data: event.target?.value
+    data: target?.value
     });
+});
+
+let debounceTimer: ReturnType<typeof setTimeout>;
+
+searchInput.addEventListener('input', (event) => {
+  // Clear any existing timer
+  clearTimeout(debounceTimer);
+
+  // Set a new timer to fire after 2 seconds of inactivity
+  debounceTimer = setTimeout(() => {
+    chrome.runtime.sendMessage({
+      type: 'SEARCH_INPUT',
+      data: (event.target as HTMLInputElement)?.value
+    });
+  }, 2000);
 });
 }
 

@@ -9,7 +9,7 @@ function App () {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.scripting.executeScript({
         target: { tabId: tabs[0].id || 0},
-        function: () => {
+        func: () => {
           // This code runs in the context of the web page
           const input = document.querySelector('input[name="q"]');
           return input ? input.nodeValue : '';
