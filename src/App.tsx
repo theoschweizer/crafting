@@ -1,43 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import { useState } from 'react'
 
-function App () {
-  const [searchInputs, setSearchInputs] = useState<string[]>([]);
-
-  useEffect(() => {
-    // Get the current tab to ensure we're in the extension context
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.scripting.executeScript({
-        target: { tabId: tabs[0].id || 0},
-        func: () => {
-          // This code runs in the context of the web page
-          const input = document.querySelector('input[name="q"]');
-          return input ? input.nodeValue : '';
-        }   
-      }).then((results) => {
-        const r = results[0].result as string
-        if (r) {
-          setSearchInputs([r]);
-        }
-      });
-    });
-  }, []);
+function App() { 
+  const [color, setColor] = useState('#000')
+  async function onClick () {
+    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
+    chrome.scripting.executeScript<string[], void>({
+      target: {tabId: tab.id!},
+      args: [color],
+      func: (color) => {
+        document.body.style.backgroundColor = color
+      }
+    })
+  }
 
   return (
-    <div className="p-4 w-64">
-      <h2 className="text-lg font-bold mb-4">Current Search Input</h2>
-      <ul className="space-y-2">
-        {searchInputs.map((input, index) => (
-          <li key={index} className="p-2 bg-gray-100 rounded">
-            {input}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+    <>
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <input type='color' onChange={(e) => setColor(e.currentTarget.value)} value={color}/>
+        <button onClick={onClick}>
+          click me
+        </button>
+        <p>
+          Edit <code>src/App.tsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
+  )
+}
 
-// Initialize React
-const container = document.getElementById('root');
-const root = createRoot(container);
-root.render(<App />);
+export default App
