@@ -1,46 +1,56 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { useState } from 'react'
+import { useEffect, useState } from "react";
 
-function App() { 
-  const [color, setColor] = useState('#000')
-  async function onClick () {
-    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
-    chrome.scripting.executeScript<string[], void>({
-      target: {tabId: tab.id!},
-      args: [color],
-      func: (color) => {
-        document.body.style.backgroundColor = color
-      }
-    })
+function App() {
+  const [text, setText] = useState("");
+  
+  async function scripts() {
+    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+    // Inject the script into the current tab
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id! },
+      func: () => {
+        const inputBox = document.getElementById("prompt-textarea");
+
+        if (inputBox) {
+          const observer = new MutationObserver(() => {
+            const textContent = inputBox?.children[0]?.textContent || "";
+            chrome.runtime.sendMessage({ textContent }); // Send the updated text to the background script or React component
+          });
+
+          observer.observe(inputBox, {
+            childList: true, // Detect changes to direct children (e.g., text nodes)
+            subtree: true, // Detect changes to nested elements
+            characterData: true, // Observe text content changes
+          });
+        }
+      },
+    });
   }
 
+  useEffect(() => {
+    // Listen for messages from the background script
+    chrome.runtime.onMessage.addListener((message) => {
+      console.log("Message received in React:", message);
+      if (message.textContent) {
+        setText(message.textContent);
+      }
+    });
+
+    // Clean up the listener when the component unmounts
+    return () => {
+      chrome.runtime.onMessage.removeListener(() => {})
+    };
+  }, []);
+
+  scripts();
+
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <input type='color' onChange={(e) => setColor(e.currentTarget.value)} value={color}/>
-        <button onClick={onClick}>
-          click me
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <p>my message:</p>
+      <p>{text}</p>
+    </div>
+  );
 }
 
-export default App
+export default App;
