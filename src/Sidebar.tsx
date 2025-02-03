@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 
 export function Sidebar () {
     const [text, setText] = useState("");
+
+    // // Anthropic Instance
+    // const anthropic = new Anthropic({
+    //     apiKey: process.env.ANTHROPIC_API_KEY
+    // })
+
     useEffect(() => {
         chrome.runtime.onMessage.addListener((message) => {
           setText(message.textContent); // Update state
@@ -21,6 +27,7 @@ export function Sidebar () {
           }}>
         <h2>My Prompt</h2>
         <p>{text}</p>
+        <button onClick={() => alert('button pushed')}>Run the model</button>
         </div>
     );
     }

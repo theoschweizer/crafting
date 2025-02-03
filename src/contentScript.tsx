@@ -2,44 +2,6 @@
 import ReactDOM from 'react-dom/client';
 import { Sidebar } from './Sidebar';
 
-// const Sidebar: React.FC = () => {
-//   return <div className="sidebar">This is a Sidebar (Injected via TS)</div>;
-// };
-
-// function injectSidebar() {
-// const wrapper = document.createElement("div");
-// wrapper.id = "crafting-page-wrapper";
-// wrapper.style.display = "flex"; // Enable Flexbox
-// wrapper.style.width = "100vw"; // Full viewport width
-
-// // Sidebar container
-// const sidebarContainer = document.createElement("div");
-// sidebarContainer.id = "sidebar-container";
-
-// // Main content container (for the original page content)
-// const contentContainer = document.createElement("div");
-// contentContainer.id = "content-container";
-// contentContainer.style.flex = "1"; // Takes up remaining space
-// contentContainer.style.overflow = "auto"; // Prevents layout breaking
-
-// // Move all body children to the content container
-// while (document.body.firstChild) {
-//   contentContainer.appendChild(document.body.firstChild);
-// }
-
-// // Append sidebar and content container to wrapper
-// wrapper.appendChild(sidebarContainer);
-// wrapper.appendChild(contentContainer);
-
-// // Append wrapper to body
-// document.body.appendChild(wrapper);
-
-// // Render React Sidebar
-// const root = ReactDOM.createRoot(sidebarContainer);
-// root.render(<Sidebar />);
-
-// }
-
 function makeRoomForSidebar() {
  // Inject Sidebar into Page
 const sidebarContainer = document.createElement("div");
