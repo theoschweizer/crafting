@@ -1,18 +1,32 @@
 import { useEffect, useState } from "react";
+import Anthropic from "@anthropic-ai/sdk";
+import { analyzefeedback } from "./api";
 
 export function Sidebar () {
     const [text, setText] = useState("");
+    const [feedback, setFeedback] = useState("");
 
-    // // Anthropic Instance
-    // const anthropic = new Anthropic({
-    //     apiKey: process.env.ANTHROPIC_API_KEY
-    // })
+    // Anthropic Instance
+    const anthropic = new Anthropic({
+        apiKey: import.meta.env.VITE_ANTHROPIC_API_KEY,
+        dangerouslyAllowBrowser: true
+    })
 
     useEffect(() => {
         chrome.runtime.onMessage.addListener((message) => {
           setText(message.textContent); // Update state
         });
       }, []);
+
+    async function handleGetFeedback() {
+        alert('button pushed');
+        const content = await analyzefeedback(anthropic, text);
+        if (content?.[0]?.type === "text") {
+            setFeedback(content[0].text);
+        }
+    }
+
+
     return (
         <div style={{
             width: "300px",
@@ -27,7 +41,8 @@ export function Sidebar () {
           }}>
         <h2>My Prompt</h2>
         <p>{text}</p>
-        <button onClick={() => alert('button pushed')}>Run the model</button>
+        <button onClick={handleGetFeedback}>Run the model</button>
+        <p>{feedback}</p>
         </div>
     );
     }
