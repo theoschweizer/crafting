@@ -1,0 +1,42 @@
+:root {
+    --text-color: #000000;
+    --background-color: #FCFBF9;
+    --border-color: #ECEBE8;
+    --active-color: #000000;
+    --input-background-color: #FFFFFF;
+    --text-background-color: rgba(255, 255, 255, 0.5);
+
+    --font: 'Nunito', sans-serif;
+  }
+
+#crafting-sidebar * {
+    font-family: var(--font);
+    color: var(--text);
+}
+
+#crafting-sidebar h4 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+#crafting-sidebar p {
+    font-size: 12px;
+    margin: 0;
+}
+
+#crafting-sidebar textarea {
+    all: unset;
+    font-size: 12px;
+    height: auto;
+}
+
+#crafting-sidebar textarea:focus {
+    outline: none;
+    font-size: 12px;
+}
+
+#crafting-sidebar button {
+    all: unset;
+    cursor: pointer;
+}

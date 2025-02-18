@@ -2,7 +2,9 @@
 import ReactDOM from 'react-dom/client';
 import { Sidebar } from './Sidebar';
 
-function makeRoomForSidebar() {
+function injectSidebar() {
+if (document.getElementById("crafting-sidebar")) return; // Sidebar already injected
+
  // Inject Sidebar into Page
 const sidebarContainer = document.createElement("div");
 sidebarContainer.id = "crafting-sidebar";
@@ -17,8 +19,37 @@ const root = ReactDOM.createRoot(sidebarContainer);
 root.render(<Sidebar />);
 }
 
+function injectFont() {
+  if (document.getElementById("crafting-font")) return; // Font already injected
+
+  const fontLink = document.createElement('link');
+  fontLink.href = "https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap";
+  fontLink.rel = "stylesheet";
+  fontLink.id = "crafting-font";
+  document.head.appendChild(fontLink);
+}
+
 const pageObserver = new MutationObserver(() => {
-  document.getElementById("crafting-sidebar") || makeRoomForSidebar();
+  injectFont();
+
+  const showSidebarJSON = window.localStorage.getItem('show_sidebar')
+  if (showSidebarJSON === null || showSidebarJSON === 'true') {
+      injectSidebar();
+  }
+
+  chrome.runtime.onMessage.addListener((message) => {
+    if (message.type === "show_sidebar") {
+      if (message.data) {
+        injectSidebar();
+      } else {
+        const sidebar = document.getElementById("crafting-sidebar");
+        if (sidebar) {
+          sidebar.remove();
+          document.body.style.marginLeft = "0"; // Reset margin
+        }
+      }
+    }
+  });
 
   const inputBox = document.getElementById("prompt-textarea");
 
@@ -31,7 +62,7 @@ const pageObserver = new MutationObserver(() => {
       if (!inputBox.children[0] || textContent.trim() === "") {
         textContent = ""; // Explicitly set empty string when fully cleared
       }
-      chrome.runtime.sendMessage({ textContent });
+      chrome.runtime.sendMessage({ type: 'textbox', data: textContent });
     });
 
     observer.observe(inputBox, {

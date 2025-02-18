@@ -2,10 +2,11 @@
     "manifest_version": 3,
     "name": "Crafting", 
     "icons": {
-        "16": "crafting_16.png",
-        "32": "crafting_32.png",
-        "48": "crafting_48.png",
-        "128": "crafting_128.png"
+        "16": "Logo_16.png",
+        "24": "Logo_24.png",
+        "32": "Logo_32.png",
+        "48": "Logo_48.png",
+        "128": "Logo_128.png"
     },
     "version": "1.0",
     "permissions": [
@@ -14,6 +15,9 @@
         "tabs", 
         "scripting"
     ],
+    "action": {
+        "default_popup": "popup.html"
+    },
     "content_scripts": [
         {
           "matches": ["<all_urls>"],
@@ -26,5 +30,11 @@
     "host_permissions": [
         "https://*/*",
         "http://*/*"
+    ], 
+    "web_accessible_resources": [
+        {
+            "resources": ["Logo_16.png"],
+            "matches": ["<all_urls>"]
+        }
     ]
 }

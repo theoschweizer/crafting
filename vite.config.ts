@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig, optimizeDeps } from 'vite'
 import copy from "rollup-plugin-copy";
 import react from '@vitejs/plugin-react'
 
@@ -16,13 +16,14 @@ export default defineConfig({
   build: {
     outDir: "dist", // Output the build to the dist folder
     rollupOptions: {
-      input: {
-        content: 'src/contentScript.tsx', // Entry for content script
-      },
-      output: {
-        format: 'iife', // Ensures the script runs immediately
-        entryFileNames: '[name].bundle.js', // Output filename
-      },
-    },
+        input: {
+            popup: 'src/popup/index.tsx', // Entry for your popup React app          
+            content: 'src/contentScript.tsx',  // Content script entry point
+            background: 'src/background.js'    // Background script entry point
+        }
+    }
+  },  
+  optimizeDeps: {
+    exclude: ['@tabler/icons-react']
   }
 })

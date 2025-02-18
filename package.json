@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build --config vite.config.ts && vite build --config vite.popup.config.ts && vite build --config vite.content.config.ts",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.36.3",
+    "@tabler/icons-react": "^3.30.0",
     "@types/chrome": "^0.0.298",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
