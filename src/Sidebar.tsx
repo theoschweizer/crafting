@@ -11,7 +11,7 @@ import { SuggestionDisplay } from "./components/SuggestionDisplay";
 export function Sidebar () {
     const [text, setText] = useState("");
     const [selectedDisplay, setSelectedDisplay] = useState<SelectedDisplay>("prompt");
-    const [modelResponseText, setModelResponseText] = useState("This is an example model response.");
+    const [modelResponseText, setModelResponseText] = useState("This is an **example** model response.");
     const imgURL = chrome.runtime.getURL("Logo_16.png");
 
     // Anthropic Instance
@@ -74,7 +74,7 @@ export function Sidebar () {
             {
                 selectedDisplay === "prompt" ? 
                   <PromptDisplay text={modelResponseText} setText={setModelResponseText} /> :
-                  <SuggestionDisplay text={text} />
+                  <SuggestionDisplay text={modelResponseText} />
               }
         </div>
     );

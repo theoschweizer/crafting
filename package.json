@@ -12,9 +12,14 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.36.3",
     "@tabler/icons-react": "^3.30.0",
+    "@tiptap/pm": "^2.11.5",
+    "@tiptap/react": "^2.11.5",
+    "@tiptap/starter-kit": "^2.11.5",
     "@types/chrome": "^0.0.298",
+    "dompurify": "^3.2.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-markdown": "^10.0.0",
     "rollup-plugin-copy": "^3.5.0"
   },
   "devDependencies": {

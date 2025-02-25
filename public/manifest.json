@@ -20,7 +20,7 @@
     },
     "content_scripts": [
         {
-          "matches": ["<all_urls>"],
+          "matches": ["https://chatgpt.com/*"],
           "js": ["content.bundle.js"]
         }
       ],
@@ -28,13 +28,12 @@
         "service_worker": "background.js"
   },
     "host_permissions": [
-        "https://*/*",
-        "http://*/*"
+        "https://chatgpt.com/*"
     ], 
     "web_accessible_resources": [
         {
             "resources": ["Logo_16.png"],
-            "matches": ["<all_urls>"]
+            "matches": ["https://chatgpt.com/*"]
         }
     ]
 }
