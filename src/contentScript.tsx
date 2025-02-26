@@ -59,7 +59,7 @@ const pageObserver = new MutationObserver(() => {
     const observer = new MutationObserver(() => {
       let textContent = inputBox?.children[0]?.textContent || "";
       // Check if input is fully cleared (edge case fix)
-      if (!inputBox.children[0] || textContent.trim() === "") {
+      if (!inputBox.children[0] || textContent.trim() === "" ) {
         textContent = ""; // Explicitly set empty string when fully cleared
       }
       chrome.runtime.sendMessage({ type: 'textbox', data: textContent });
