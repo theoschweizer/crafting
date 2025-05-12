@@ -1,6 +1,11 @@
 {
     "manifest_version": 3,
     "name": "Crafting", 
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApNNeiRGudKBx1tYYEYDFMhpLjrdGbdlmoTKikMUgXOMOoBYTmuX3MBrQoXG/7kpW8WQ8o6xtJ7or8sB0lkNN97x2jatxk7H+fE7LOikQex/8/Og7BNaH4j2exO8ea73cdF1u/+U8Xu10OOp/NrE3FovoXFIVUVZhfKh/4zxwzj4oJyny3th2cNiOYGUT77DPg0jKVcEVWK32AmyNKOQbqdDFErXlf3FkwR0HwGDsK/dLx0jKifHOKYGAuLt21Usc22SRSMadQSAk9ETAjHlq3+ULf9puiZL46nhJ+crGOGnuGJPzXuxXEmwxGm8xhP7HGrgO1bOp6FDivKe+BD/BLQIDAQAB",
+    "oauth2": {
+    "client_id": "535709214658-ftssa9eevfen4nmthhiruti5qup8fo6r.apps.googleusercontent.com",
+    "scopes":[""]
+  },
     "icons": {
         "16": "Logo_16.png",
         "24": "Logo_24.png",
@@ -13,7 +18,8 @@
         "storage",
         "activeTab",
         "tabs", 
-        "scripting"
+        "scripting",
+        "identity"
     ],
     "action": {
         "default_popup": "popup.html"
